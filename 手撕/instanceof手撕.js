@@ -18,7 +18,10 @@ function myInstanceof(left, right) {
     if (typeof right !== "function") {
         throw new TypeError("Right-hand side is not callable");
     }
+
+    // 循环判断，直到相等或者原型链走到尽头
     while (left) {
+        // 判断条件：左边对象的构造函数的原型对象等于右边构造函数的原型
         if (Object.getPrototypeOf(left) !== right.prototype)
             left = Object.getPrototypeOf(left);
         else return true;

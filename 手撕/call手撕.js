@@ -24,17 +24,30 @@
 */
 
 Function.prototype.myCall = function (context, ...args) {
+    // context如果是null或undefined，就把它指向全局对象globalThis
     context = Object(context ?? globalThis);
+
+    // 使用Symbol()创建一个独一无二的属性键，从根本上避免属性名冲突
     const key = Symbol("fn");
+
+    // 将函数挂载到context上
     context[key] = this;
+
+    //初始化返回值
     let result;
+
+    // 使用try...catch...finally语句执行函数、捕获错误和清理临时函数
     try {
+        // 执行函数并接收返回值
         result = context[key](...args);
     } catch (error) {
         console.error(`函数调用出错：${error}`);
     } finally {
+        // 删除绑定在对象上的函数，防止内存泄露
         delete context[key];
     }
+
+    // 返回函数返回值
     return result;
 };
 

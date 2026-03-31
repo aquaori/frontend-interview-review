@@ -39,7 +39,6 @@ class EventEmitter {
                 callback(...args);
             } catch (error) {
                 console.error(`事件${event}的回调执行出错:`, error);
-                // 不中断后续回调，也不重复抛错
             }
         })
     }
@@ -67,7 +66,6 @@ class EventEmitter {
             } catch (error) {
                 console.error(`事件${event}的once回调执行出错:`, error);
             } finally {
-                // 无论回调是否成功，都移除事件，保证once生效
                 this.off(event, wrapper);
             }
         }
