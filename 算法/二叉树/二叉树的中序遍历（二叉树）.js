@@ -1,6 +1,6 @@
 /*
 94. 二叉树的中序遍历
-给定一个二叉树的根节点 root ，返回 它的 中序 遍历 。
+给定一个二叉树的根节点 root ，返回它的中序遍历 。
 
 示例 1：
 输入：root = [1,null,2,3]
@@ -47,5 +47,17 @@ var inorderTraversal = function (root) {
             res.push(...inorderTraversal(root.right));
         }
     }
+    return res;
+};
+
+// 简洁写法
+var inorderTraversal = function (root) {
+    const res = [];
+    if (!root) return res;
+
+    res.push(...inorderTraversal(root.left));
+    res.push(root.val);
+    res.push(...inorderTraversal(root.right));
+
     return res;
 };
